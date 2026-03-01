@@ -1,28 +1,20 @@
-#pragma once
+#ifndef PASSENGER_GENERATOR_H
+#define PASSENGER_GENERATOR_H
 #include <vector>
+#include <random>
 #include <string>
 
-struct Passenger {
-    int id;
-    int startFloor;
-    int targetFloor;
-    int direction;
-    int spawnTime;
-};
-
 class PassengerGenerator {
-private:
-    int floorCount;
-    double generationRate;
-    std::vector<double> enterProb;
-    std::vector<double> exitProb;
-    int currentTime;
-    int nextPassengerId;
-
 public:
     PassengerGenerator();
-    void loadConfig(const std::string& filename);
-    std::vector<Passenger> generate();
-    void outputPassengers(const std::vector<Passenger>& passengers, const std::string& filename);
-    void tick();
+    bool loadConfig(const std::string& filename);
+    void generateAndSave(const std::string& output_file);
+private:
+    int next_id;
+    int num_floors;
+    double spawn_rate;
+    std::vector<double> exit_weights;
+    std::vector<double> entry_weights;
+    std::default_random_engine gen;
 };
+#endif

@@ -1,75 +1,32 @@
 #include "PassengerGenerator.h"
 #include <fstream>
-#include <random>
+#include <iostream>
 
-using namespace std;
-
-PassengerGenerator::PassengerGenerator() {
-    currentTime = 0;
-    nextPassengerId = 1;
+PassengerGenerator::PassengerGenerator() : next_id(1) {
+    std::random_device rd;
+    gen.seed(rd());
 }
 
-void PassengerGenerator::loadConfig(const string& filename) {
-    ifstream in(filename);
-    string tag;
-
-    in >> tag >> floorCount;
-    in >> tag >> generationRate;
-
-    enterProb.resize(floorCount);
-    exitProb.resize(floorCount);
-
-    in >> tag;
-    for (int i = 0; i < floorCount; i++)
-        in >> enterProb[i];
-
-    in >> tag;
-    for (int i = 0; i < floorCount; i++)
-        in >> exitProb[i];
+bool PassengerGenerator::loadConfig(const std::string& filename) {
+    std::ifstream file(filename);
+    if (!(file >> num_floors >> spawn_rate)) return false;
+    exit_weights.assign(num_floors, 0);
+    entry_weights.assign(num_floors, 0);
+    for(int i=0; i<num_floors; ++i) file >> exit_weights[i];
+    for(int i=0; i<num_floors; ++i) file >> entry_weights[i];
+    return true;
 }
 
-vector<Passenger> PassengerGenerator::generate() {
-    static random_device rd;
-    static mt19937 gen(rd());
-    uniform_real_distribution<> dis(0,1);
-
-    vector<Passenger> result;
-
-    if (dis(gen) < generationRate) {
-        discrete_distribution<> startDist(exitProb.begin(), exitProb.end());
-        discrete_distribution<> endDist(enterProb.begin(), enterProb.end());
-
-        int start = startDist(gen);
-        int target = endDist(gen);
-
-        if (start != target) {
-            Passenger p;
-            p.id = nextPassengerId++;
-            p.startFloor = start;
-            p.targetFloor = target;
-            p.direction = (target > start) ? 1 : -1;
-            p.spawnTime = currentTime;
-            result.push_back(p);
+void PassengerGenerator::generateAndSave(const std::string& output_file) {
+    std::uniform_real_distribution<double> dist(0, 1);
+    if (dist(gen) < spawn_rate) {
+        std::discrete_distribution<int> start_d(exit_weights.begin(), exit_weights.end());
+        std::discrete_distribution<int> dest_d(entry_weights.begin(), entry_weights.end());
+        int s = start_d(gen), d = dest_d(gen);
+        if (s != d) {
+            std::ofstream out(output_file, std::ios::app);
+            out << next_id++ << " " << s << " " << d << "\n";
+            std::cout << "[Gen] Created Passenger " << next_id-1 << " (" << s << "->" << d << ")" << std::endl;
         }
     }
-
-    return result;
-}
-
-void PassengerGenerator::outputPassengers(const vector<Passenger>& passengers, const string& filename) {
-    ofstream out(filename, ios::app);
-
-    if (!passengers.empty()) {
-        out << "TIME " << currentTime << "\n";
-        for (auto& p : passengers) {
-            out << "P " << p.id << " "
-                << p.startFloor << " "
-                << p.targetFloor << " "
-                << p.direction << "\n";
-        }
-    }
-}
-
-void PassengerGenerator::tick() {
-    currentTime++;
 }
