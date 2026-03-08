@@ -1,40 +1,31 @@
 CXX = g++
 CXXFLAGS = -std=c++11 -Wall -I.
 
+# 執行檔路徑
 GEN_TARGET = PassengerGenerator/generator
-STR_TARGET = CoreStrategy/strategy
+CORE_STR_TARGET = CoreStrategy/core_strategy
+BETTER_STR_TARGET = BetterStrategy/better_strategy
 STA_TARGET = StatisticsTracker/stats
 
-GEN_SRCS = PassengerGenerator/main.cpp PassengerGenerator/PassengerGenerator.cpp
-STR_SRCS = CoreStrategy/main.cpp CoreStrategy/CoreStrategy.cpp
-STA_SRCS = StatisticsTracker/main.cpp StatisticsTracker/StatisticsTracker.cpp
+# 編譯所有目標
+all: init_files $(GEN_TARGET) $(CORE_STR_TARGET) $(BETTER_STR_TARGET) $(STA_TARGET)
 
-GEN_OBJS = $(GEN_SRCS:.cpp=.o)
-STR_OBJS = $(STR_SRCS:.cpp=.o)
-STA_OBJS = $(STA_SRCS:.cpp=.o)
+init_files:
+	@mkdir -p PassengerGenerator CoreStrategy BetterStrategy StatisticsTracker
+	@touch passengers.txt events.txt stats.txt state.txt id_counter.txt
 
-all: init $(GEN_TARGET) $(STR_TARGET) $(STA_TARGET)
+$(GEN_TARGET): PassengerGenerator/main.cpp PassengerGenerator/PassengerGenerator.cpp
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
-init:
-	@touch config.txt passengers.txt events.txt stats.txt
-	@if [ ! -s config.txt ]; then \
-		echo "10 0.5" > config.txt; \
-		echo "0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1" >> config.txt; \
-		echo "0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1" >> config.txt; \
-	fi
+$(CORE_STR_TARGET): CoreStrategy/main.cpp CoreStrategy/CoreStrategy.cpp
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
-$(GEN_TARGET): $(GEN_OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ $(GEN_OBJS)
+$(BETTER_STR_TARGET): BetterStrategy/main.cpp BetterStrategy/BetterStrategy.cpp
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
-$(STR_TARGET): $(STR_OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ $(STR_OBJS)
-
-$(STA_TARGET): $(STA_OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ $(STA_OBJS)
-
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+$(STA_TARGET): StatisticsTracker/main.cpp
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
 clean:
-	rm -f $(GEN_TARGET) $(STR_TARGET) $(STA_TARGET) $(GEN_OBJS) $(STR_OBJS) $(STA_OBJS)
-	rm -f passengers.txt events.txt stats.txt
+	rm -f $(GEN_TARGET) $(CORE_STR_TARGET) $(BETTER_STR_TARGET) $(STA_TARGET)
+	rm -f passengers.txt events.txt stats.txt state.txt id_counter.txt tmp_event.json log.json

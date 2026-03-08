@@ -1,5 +1,5 @@
-#ifndef CORE_STRATEGY_H
-#define CORE_STRATEGY_H
+#ifndef BETTER_STRATEGY_H
+#define BETTER_STRATEGY_H
 
 #include <vector>
 #include <string>
@@ -8,12 +8,12 @@ struct Passenger {
     int id;
     int start;
     int dest;
-    int spawn_tick; 
+    int spawn_tick;
 };
 
-class CoreStrategy {
+class BetterStrategy {
 public:
-    CoreStrategy();
+    BetterStrategy();
     void execute(int current_tick);
 
 private:

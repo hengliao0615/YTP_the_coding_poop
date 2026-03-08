@@ -1,13 +1,19 @@
 #include "CoreStrategy.h"
-#include <thread>
-#include <chrono>
+#include <iostream>
+#include <string>
 
-int main() {
-    CoreStrategy cs;
-    while (true) {
-        cs.readNewPassengers("passengers.txt");
-        cs.simulateStep("events.txt");
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+int main(int argc, char* argv[]) {
+    int current_tick = 0;
+    if (argc > 1) {
+        try {
+            current_tick = std::stoi(argv[1]);
+        } catch (...) {
+            current_tick = 0;
+        }
     }
+
+    CoreStrategy strategy;
+    strategy.execute(current_tick);
+
     return 0;
 }

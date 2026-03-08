@@ -1,0 +1,640 @@
+{
+  "metadata": {
+    "totalTicks": 100,
+    "strategy": "BetterStrategy"
+  },
+  "config": {
+    "floorCount": 12,
+    "elevatorCount": 2,
+    "elevatorCapacity": 3,
+    "floorNames": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+  },
+  "timeline": [
+    {
+      "tick": 1,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P1", "from": 11, "to": 8, "spawnTick": 1 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 1, "to": 2, "direction": "UP" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 1, "to": 2, "direction": "UP" }
+      ]
+    },
+    {
+      "tick": 2,
+      "events": [
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 2, "to": 3, "direction": "UP" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 2, "to": 3, "direction": "UP" }
+      ]
+    },
+    {
+      "tick": 3,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P2", "from": 8, "to": 2, "spawnTick": 3 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 3, "to": 4, "direction": "UP" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 3, "to": 4, "direction": "UP" }
+      ]
+    },
+    {
+      "tick": 4,
+      "events": [
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 4, "to": 5, "direction": "UP" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 4, "to": 5, "direction": "UP" }
+      ]
+    },
+    {
+      "tick": 5,
+      "events": [
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 5, "to": 6, "direction": "UP" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 5, "to": 6, "direction": "UP" }
+      ]
+    },
+    {
+      "tick": 6,
+      "events": [
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 6, "to": 7, "direction": "UP" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 6, "to": 7, "direction": "UP" }
+      ]
+    },
+    {
+      "tick": 7,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P3", "from": 9, "to": 10, "spawnTick": 7 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 7, "to": 8, "direction": "UP" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 7, "to": 8, "direction": "UP" }
+      ]
+    },
+    {
+      "tick": 8,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P4", "from": 6, "to": 3, "spawnTick": 8 },
+        { "type": "PASSENGER_ENTER", "passengerId": "P2", "elevatorId": 0, "floor": 8 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 8, "to": 9, "direction": "UP" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 8, "to": 9, "direction": "UP" }
+      ]
+    },
+    {
+      "tick": 9,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P5", "from": 7, "to": 1, "spawnTick": 9 },
+        { "type": "PASSENGER_ENTER", "passengerId": "P3", "elevatorId": 0, "floor": 9 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 9, "to": 10, "direction": "UP" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 9, "to": 10, "direction": "UP" }
+      ]
+    },
+    {
+      "tick": 10,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P6", "from": 11, "to": 7, "spawnTick": 10 },
+        { "type": "PASSENGER_EXIT", "passengerId": "P3", "floor": 10, "elevatorId": 0 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 10, "to": 11, "direction": "UP" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 10, "to": 11, "direction": "UP" }
+      ]
+    },
+    {
+      "tick": 11,
+      "events": [
+        { "type": "PASSENGER_ENTER", "passengerId": "P1", "elevatorId": 0, "floor": 11 },
+        { "type": "PASSENGER_ENTER", "passengerId": "P6", "elevatorId": 0, "floor": 11 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 11, "to": 10, "direction": "DOWN" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 11, "to": 10, "direction": "DOWN" }
+      ]
+    },
+    {
+      "tick": 12,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P7", "from": 4, "to": 6, "spawnTick": 12 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 10, "to": 9, "direction": "DOWN" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 10, "to": 9, "direction": "DOWN" }
+      ]
+    },
+    {
+      "tick": 13,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P8", "from": 7, "to": 4, "spawnTick": 13 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 9, "to": 8, "direction": "DOWN" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 9, "to": 8, "direction": "DOWN" }
+      ]
+    },
+    {
+      "tick": 14,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P9", "from": 1, "to": 11, "spawnTick": 14 },
+        { "type": "PASSENGER_EXIT", "passengerId": "P1", "floor": 8, "elevatorId": 0 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 8, "to": 7, "direction": "DOWN" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 8, "to": 7, "direction": "DOWN" }
+      ]
+    },
+    {
+      "tick": 15,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P10", "from": 1, "to": 11, "spawnTick": 15 },
+        { "type": "PASSENGER_EXIT", "passengerId": "P6", "floor": 7, "elevatorId": 0 },
+        { "type": "PASSENGER_ENTER", "passengerId": "P5", "elevatorId": 0, "floor": 7 },
+        { "type": "PASSENGER_ENTER", "passengerId": "P8", "elevatorId": 0, "floor": 7 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 7, "to": 6, "direction": "DOWN" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 7, "to": 6, "direction": "DOWN" }
+      ]
+    },
+    {
+      "tick": 16,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P11", "from": 6, "to": 5, "spawnTick": 16 },
+        { "type": "PASSENGER_ENTER", "passengerId": "P4", "elevatorId": 1, "floor": 6 },
+        { "type": "PASSENGER_ENTER", "passengerId": "P11", "elevatorId": 1, "floor": 6 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 6, "to": 5, "direction": "DOWN" }
+      ]
+    },
+    {
+      "tick": 17,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P12", "from": 2, "to": 12, "spawnTick": 17 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 6, "to": 5, "direction": "DOWN" },
+        { "type": "PASSENGER_EXIT", "passengerId": "P11", "floor": 5, "elevatorId": 1 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 5, "to": 4, "direction": "DOWN" }
+      ]
+    },
+    {
+      "tick": 18,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P13", "from": 5, "to": 7, "spawnTick": 18 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 5, "to": 4, "direction": "DOWN" },
+        { "type": "PASSENGER_ENTER", "passengerId": "P7", "elevatorId": 1, "floor": 4 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 4, "to": 3, "direction": "DOWN" }
+      ]
+    },
+    {
+      "tick": 19,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P14", "from": 8, "to": 11, "spawnTick": 19 },
+        { "type": "PASSENGER_EXIT", "passengerId": "P8", "floor": 4, "elevatorId": 0 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 4, "to": 3, "direction": "DOWN" },
+        { "type": "PASSENGER_EXIT", "passengerId": "P4", "floor": 3, "elevatorId": 1 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 3, "to": 2, "direction": "DOWN" }
+      ]
+    },
+    {
+      "tick": 20,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P15", "from": 10, "to": 6, "spawnTick": 20 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 3, "to": 2, "direction": "DOWN" },
+        { "type": "PASSENGER_ENTER", "passengerId": "P12", "elevatorId": 1, "floor": 2 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 2, "to": 1, "direction": "DOWN" }
+      ]
+    },
+    {
+      "tick": 21,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P16", "from": 11, "to": 7, "spawnTick": 21 },
+        { "type": "PASSENGER_EXIT", "passengerId": "P2", "floor": 2, "elevatorId": 0 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 2, "to": 1, "direction": "DOWN" },
+        { "type": "PASSENGER_ENTER", "passengerId": "P9", "elevatorId": 1, "floor": 1 }
+      ]
+    },
+    {
+      "tick": 22,
+      "events": [
+        { "type": "PASSENGER_EXIT", "passengerId": "P5", "floor": 1, "elevatorId": 0 },
+        { "type": "PASSENGER_ENTER", "passengerId": "P10", "elevatorId": 0, "floor": 1 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 1, "to": 2, "direction": "UP" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 1, "to": 2, "direction": "UP" }
+      ]
+    },
+    {
+      "tick": 23,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P17", "from": 10, "to": 8, "spawnTick": 23 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 2, "to": 3, "direction": "UP" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 2, "to": 3, "direction": "UP" }
+      ]
+    },
+    {
+      "tick": 24,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P18", "from": 2, "to": 4, "spawnTick": 24 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 3, "to": 4, "direction": "UP" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 3, "to": 4, "direction": "UP" }
+      ]
+    },
+    {
+      "tick": 25,
+      "events": [
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 4, "to": 5, "direction": "UP" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 4, "to": 5, "direction": "UP" }
+      ]
+    },
+    {
+      "tick": 26,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P19", "from": 1, "to": 12, "spawnTick": 26 },
+        { "type": "PASSENGER_ENTER", "passengerId": "P13", "elevatorId": 0, "floor": 5 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 5, "to": 6, "direction": "UP" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 5, "to": 6, "direction": "UP" }
+      ]
+    },
+    {
+      "tick": 27,
+      "events": [
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 6, "to": 7, "direction": "UP" },
+        { "type": "PASSENGER_EXIT", "passengerId": "P7", "floor": 6, "elevatorId": 1 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 6, "to": 7, "direction": "UP" }
+      ]
+    },
+    {
+      "tick": 28,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P20", "from": 3, "to": 4, "spawnTick": 28 },
+        { "type": "PASSENGER_EXIT", "passengerId": "P13", "floor": 7, "elevatorId": 0 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 7, "to": 8, "direction": "UP" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 7, "to": 8, "direction": "UP" }
+      ]
+    },
+    {
+      "tick": 29,
+      "events": [
+        { "type": "PASSENGER_ENTER", "passengerId": "P14", "elevatorId": 0, "floor": 8 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 8, "to": 9, "direction": "UP" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 8, "to": 9, "direction": "UP" }
+      ]
+    },
+    {
+      "tick": 30,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P21", "from": 6, "to": 3, "spawnTick": 30 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 9, "to": 10, "direction": "UP" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 9, "to": 10, "direction": "UP" }
+      ]
+    },
+    {
+      "tick": 31,
+      "events": [
+        { "type": "PASSENGER_ENTER", "passengerId": "P15", "elevatorId": 0, "floor": 10 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 10, "to": 11, "direction": "UP" },
+        { "type": "PASSENGER_ENTER", "passengerId": "P17", "elevatorId": 1, "floor": 10 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 10, "to": 11, "direction": "UP" }
+      ]
+    },
+    {
+      "tick": 32,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P22", "from": 9, "to": 10, "spawnTick": 32 },
+        { "type": "PASSENGER_EXIT", "passengerId": "P10", "floor": 11, "elevatorId": 0 },
+        { "type": "PASSENGER_EXIT", "passengerId": "P14", "floor": 11, "elevatorId": 0 },
+        { "type": "PASSENGER_ENTER", "passengerId": "P16", "elevatorId": 0, "floor": 11 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 11, "to": 10, "direction": "DOWN" },
+        { "type": "PASSENGER_EXIT", "passengerId": "P9", "floor": 11, "elevatorId": 1 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 11, "to": 12, "direction": "UP" }
+      ]
+    },
+    {
+      "tick": 33,
+      "events": [
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 10, "to": 9, "direction": "DOWN" },
+        { "type": "PASSENGER_EXIT", "passengerId": "P12", "floor": 12, "elevatorId": 1 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 12, "to": 11, "direction": "DOWN" }
+      ]
+    },
+    {
+      "tick": 34,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P23", "from": 8, "to": 11, "spawnTick": 34 },
+        { "type": "PASSENGER_ENTER", "passengerId": "P22", "elevatorId": 0, "floor": 9 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 9, "to": 8, "direction": "DOWN" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 11, "to": 10, "direction": "DOWN" }
+      ]
+    },
+    {
+      "tick": 35,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P24", "from": 8, "to": 12, "spawnTick": 35 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 8, "to": 7, "direction": "DOWN" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 10, "to": 9, "direction": "DOWN" }
+      ]
+    },
+    {
+      "tick": 36,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P25", "from": 1, "to": 6, "spawnTick": 36 },
+        { "type": "PASSENGER_EXIT", "passengerId": "P16", "floor": 7, "elevatorId": 0 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 7, "to": 6, "direction": "DOWN" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 9, "to": 8, "direction": "DOWN" }
+      ]
+    },
+    {
+      "tick": 37,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P26", "from": 12, "to": 2, "spawnTick": 37 },
+        { "type": "PASSENGER_EXIT", "passengerId": "P15", "floor": 6, "elevatorId": 0 },
+        { "type": "PASSENGER_ENTER", "passengerId": "P21", "elevatorId": 0, "floor": 6 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 6, "to": 5, "direction": "DOWN" },
+        { "type": "PASSENGER_EXIT", "passengerId": "P17", "floor": 8, "elevatorId": 1 },
+        { "type": "PASSENGER_ENTER", "passengerId": "P23", "elevatorId": 1, "floor": 8 },
+        { "type": "PASSENGER_ENTER", "passengerId": "P24", "elevatorId": 1, "floor": 8 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 8, "to": 7, "direction": "DOWN" }
+      ]
+    },
+    {
+      "tick": 38,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P27", "from": 9, "to": 6, "spawnTick": 38 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 5, "to": 4, "direction": "DOWN" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 7, "to": 6, "direction": "DOWN" }
+      ]
+    },
+    {
+      "tick": 39,
+      "events": [
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 4, "to": 3, "direction": "DOWN" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 6, "to": 5, "direction": "DOWN" }
+      ]
+    },
+    {
+      "tick": 40,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P28", "from": 6, "to": 7, "spawnTick": 40 },
+        { "type": "PASSENGER_EXIT", "passengerId": "P21", "floor": 3, "elevatorId": 0 },
+        { "type": "PASSENGER_ENTER", "passengerId": "P20", "elevatorId": 0, "floor": 3 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 3, "to": 2, "direction": "DOWN" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 5, "to": 4, "direction": "DOWN" }
+      ]
+    },
+    {
+      "tick": 41,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P29", "from": 10, "to": 1, "spawnTick": 41 },
+        { "type": "PASSENGER_ENTER", "passengerId": "P18", "elevatorId": 0, "floor": 2 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 0, "from": 2, "to": 1, "direction": "DOWN" },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 4, "to": 3, "direction": "DOWN" }
+      ]
+    },
+    {
+      "tick": 42,
+      "events": [
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 3, "to": 2, "direction": "DOWN" }
+      ]
+    },
+    {
+      "tick": 43,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P30", "from": 4, "to": 12, "spawnTick": 43 },
+        { "type": "ELEVATOR_MOVE", "elevatorId": 1, "from": 2, "to": 1, "direction": "DOWN" }
+      ]
+    },
+    {
+      "tick": 44,
+      "events": [
+        { "type": "PASSENGER_ENTER", "passengerId": "P19", "elevatorId": 1, "floor": 1 }
+      ]
+    },
+    {
+      "tick": 46,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P31", "from": 7, "to": 12, "spawnTick": 46 }
+      ]
+    },
+    {
+      "tick": 48,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P32", "from": 9, "to": 12, "spawnTick": 48 }
+      ]
+    },
+    {
+      "tick": 49,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P33", "from": 9, "to": 8, "spawnTick": 49 }
+      ]
+    },
+    {
+      "tick": 52,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P34", "from": 12, "to": 4, "spawnTick": 52 }
+      ]
+    },
+    {
+      "tick": 54,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P35", "from": 4, "to": 9, "spawnTick": 54 }
+      ]
+    },
+    {
+      "tick": 55,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P36", "from": 2, "to": 9, "spawnTick": 55 }
+      ]
+    },
+    {
+      "tick": 56,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P37", "from": 9, "to": 6, "spawnTick": 56 }
+      ]
+    },
+    {
+      "tick": 57,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P38", "from": 8, "to": 3, "spawnTick": 57 }
+      ]
+    },
+    {
+      "tick": 58,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P39", "from": 6, "to": 10, "spawnTick": 58 }
+      ]
+    },
+    {
+      "tick": 59,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P40", "from": 1, "to": 11, "spawnTick": 59 }
+      ]
+    },
+    {
+      "tick": 60,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P41", "from": 1, "to": 8, "spawnTick": 60 }
+      ]
+    },
+    {
+      "tick": 61,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P42", "from": 8, "to": 1, "spawnTick": 61 }
+      ]
+    },
+    {
+      "tick": 64,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P43", "from": 10, "to": 5, "spawnTick": 64 }
+      ]
+    },
+    {
+      "tick": 66,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P44", "from": 2, "to": 10, "spawnTick": 66 }
+      ]
+    },
+    {
+      "tick": 67,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P45", "from": 12, "to": 5, "spawnTick": 67 }
+      ]
+    },
+    {
+      "tick": 68,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P46", "from": 6, "to": 9, "spawnTick": 68 }
+      ]
+    },
+    {
+      "tick": 69,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P47", "from": 2, "to": 1, "spawnTick": 69 }
+      ]
+    },
+    {
+      "tick": 70,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P48", "from": 10, "to": 1, "spawnTick": 70 }
+      ]
+    },
+    {
+      "tick": 71,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P49", "from": 10, "to": 1, "spawnTick": 71 }
+      ]
+    },
+    {
+      "tick": 72,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P50", "from": 9, "to": 4, "spawnTick": 72 }
+      ]
+    },
+    {
+      "tick": 73,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P51", "from": 12, "to": 5, "spawnTick": 73 }
+      ]
+    },
+    {
+      "tick": 74,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P52", "from": 5, "to": 1, "spawnTick": 74 }
+      ]
+    },
+    {
+      "tick": 76,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P53", "from": 10, "to": 4, "spawnTick": 76 }
+      ]
+    },
+    {
+      "tick": 77,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P54", "from": 5, "to": 10, "spawnTick": 77 }
+      ]
+    },
+    {
+      "tick": 79,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P55", "from": 11, "to": 6, "spawnTick": 79 }
+      ]
+    },
+    {
+      "tick": 81,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P56", "from": 7, "to": 3, "spawnTick": 81 }
+      ]
+    },
+    {
+      "tick": 82,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P57", "from": 3, "to": 2, "spawnTick": 82 }
+      ]
+    },
+    {
+      "tick": 83,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P58", "from": 12, "to": 11, "spawnTick": 83 }
+      ]
+    },
+    {
+      "tick": 84,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P59", "from": 12, "to": 8, "spawnTick": 84 }
+      ]
+    },
+    {
+      "tick": 85,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P60", "from": 8, "to": 5, "spawnTick": 85 }
+      ]
+    },
+    {
+      "tick": 88,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P61", "from": 2, "to": 7, "spawnTick": 88 }
+      ]
+    },
+    {
+      "tick": 89,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P62", "from": 9, "to": 2, "spawnTick": 89 }
+      ]
+    },
+    {
+      "tick": 90,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P63", "from": 11, "to": 3, "spawnTick": 90 }
+      ]
+    },
+    {
+      "tick": 91,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P64", "from": 12, "to": 7, "spawnTick": 91 }
+      ]
+    },
+    {
+      "tick": 92,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P65", "from": 9, "to": 8, "spawnTick": 92 }
+      ]
+    },
+    {
+      "tick": 93,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P66", "from": 4, "to": 9, "spawnTick": 93 }
+      ]
+    },
+    {
+      "tick": 94,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P67", "from": 6, "to": 8, "spawnTick": 94 }
+      ]
+    },
+    {
+      "tick": 95,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P68", "from": 1, "to": 4, "spawnTick": 95 }
+      ]
+    },
+    {
+      "tick": 96,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P69", "from": 9, "to": 1, "spawnTick": 96 }
+      ]
+    },
+    {
+      "tick": 97,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P70", "from": 7, "to": 3, "spawnTick": 97 }
+      ]
+    },
+    {
+      "tick": 98,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P71", "from": 6, "to": 12, "spawnTick": 98 }
+      ]
+    },
+    {
+      "tick": 99,
+      "events": [
+        { "type": "PASSENGER_SPAWN", "passengerId": "P72", "from": 12, "to": 9, "spawnTick": 99 }
+      ]
+    }
+  ]
+}
