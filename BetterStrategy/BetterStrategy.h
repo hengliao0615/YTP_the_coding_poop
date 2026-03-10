@@ -18,8 +18,11 @@ public:
 
 private:
     std::vector<Passenger> hall_queue;
+    // 增加從檔案讀寫歷史數據的函式
     void loadHallQueue();
     void saveHallQueue();
+    std::vector<int> loadHistory(int num_floors);
+    void saveHistory(const std::vector<int>& history);
 };
 
 #endif
