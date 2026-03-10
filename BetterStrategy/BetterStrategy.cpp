@@ -5,15 +5,15 @@
 #include <cmath>
 #include <algorithm>
 
-// 公式參數調整
-const double ALPHA = 10.0;  
-const double BETA = 1.2;    
-const double GAMMA = 1.5;   
+// 權重參數
+const double ALPHA = 10.0;  // 樓層權重 (Priority)
+const double BETA = 1.5;    // 等待時間權重 (Wait Time)
+const double GAMMA = 2.0;   // 距離懲罰 (Distance)
 
 struct Elevator {
     int id;
     int current_floor;
-    int direction; 
+    int direction; // 1: UP, -1: DOWN, 0: IDLE
     int box_size;
     int target_floor;
     std::vector<Passenger> box;
@@ -44,7 +44,7 @@ void BetterStrategy::execute(int current_tick) {
     if (!(cfg >> num_floors >> spawn_rate >> capacity >> num_elevators)) return;
     cfg.close();
 
-    // 1. 讀取電梯狀態 (state.txt: floor dir box_size target)
+    // 1. 讀取狀態
     std::vector<Elevator> elevators(num_elevators);
     std::ifstream in_state("state.txt");
     for (int i = 0; i < num_elevators; ++i) {
@@ -64,12 +64,10 @@ void BetterStrategy::execute(int current_tick) {
 
     loadHallQueue();
     std::ofstream jout("tmp_event.json", std::ios::app);
-
-    // 2. 樓層基礎優先權 (P) - 這裡可以根據歷史資料調整，目前設為 1.0
-    std::vector<double> priority(num_floors, 1.0);
+    std::vector<double> priority(num_floors, 1.0); // 預設權重
 
     for (auto &e : elevators) {
-        // A. 下車邏輯
+        // --- A. 下車邏輯 ---
         auto it = e.box.begin();
         while (it != e.box.end()) {
             if (it->dest == e.current_floor) {
@@ -81,50 +79,69 @@ void BetterStrategy::execute(int current_tick) {
             } else ++it;
         }
 
-        // B. 上車邏輯 (順路就載)
+        // --- B. 上車邏輯 (需求 1: 順路就載) ---
         auto hit = hall_queue.begin();
         while (hit != hall_queue.end()) {
             if (hit->start == e.current_floor && (int)e.box.size() < capacity) {
-                e.box.push_back(*hit);
-                jout << "        { \"type\": \"PASSENGER_ENTER\", \"passengerId\": \"P" << hit->id 
-                     << "\", \"elevatorId\": " << e.id << ", \"floor\": " << e.current_floor + 1 << " }," << std::endl;
-                hit = hall_queue.erase(hit);
-            } else ++hit;
-        }
-
-        // C. 計算得分並決定 Target (每當電梯空閒或到達目標時重算)
-        if (e.direction == 0 || e.current_floor == e.target_floor) {
-            double max_score = -99999.0;
-            int best_f = e.current_floor;
-
-            for (int f = 0; f < num_floors; ++f) {
-                // 檢查該樓層有無需求
-                bool has_demand = false;
-                int max_w = 0;
-                for (auto &p : hall_queue) {
-                    if (p.start == f) {
-                        has_demand = true;
-                        int w = current_tick - p.spawn_tick;
-                        if (w > max_w) max_w = w;
-                    }
-                }
-                for (auto &p : e.box) if (p.dest == f) has_demand = true;
-
-                if (!has_demand) continue;
-
-                // 公式: Score = αP + βW - γD
-                double dist = std::abs(e.current_floor - f);
-                double score = (ALPHA * priority[f]) + (BETA * max_w) - (GAMMA * dist);
-
-                if (score > max_score) {
-                    max_score = score;
-                    best_f = f;
+                int p_dir = (hit->dest > hit->start) ? 1 : -1;
+                // 條件：電梯靜止 OR 乘客要去的地方與電梯移動方向一致
+                if (e.direction == 0 || e.direction == p_dir) {
+                    e.box.push_back(*hit);
+                    jout << "        { \"type\": \"PASSENGER_ENTER\", \"passengerId\": \"P" << hit->id 
+                         << "\", \"elevatorId\": " << e.id << ", \"floor\": " << e.current_floor + 1 << " }," << std::endl;
+                    hit = hall_queue.erase(hit);
+                    continue;
                 }
             }
-            e.target_floor = best_f;
+            ++hit;
         }
 
-        // D. 執行移動
+        // --- C. 決策邏輯 (需求 2: 廂內優先 & 需求 3: 排除當前樓層) ---
+        if (!e.box.empty()) {
+            // 電梯內有人：優先送客。目標設為最近的目的地 (類似 SCAN)
+            int best_target = e.box[0].dest;
+            int min_dist = std::abs(e.current_floor - best_target);
+            for (const auto& p : e.box) {
+                if (std::abs(e.current_floor - p.dest) < min_dist) {
+                    min_dist = std::abs(e.current_floor - p.dest);
+                    best_target = p.dest;
+                }
+            }
+            e.target_floor = best_target;
+        } else {
+            // 電梯沒人：計算 Score 尋找大廳需求
+            if (e.current_floor == e.target_floor || e.direction == 0) {
+                double max_score = -99999.0;
+                int best_f = e.current_floor;
+                bool found_request = false;
+
+                for (int f = 0; f < num_floors; ++f) {
+                    if (f == e.current_floor) continue; // 排除目前樓層
+
+                    int max_w = -1;
+                    for (auto &p : hall_queue) {
+                        if (p.start == f) {
+                            int w = current_tick - p.spawn_tick;
+                            if (w > max_w) max_w = w;
+                        }
+                    }
+
+                    if (max_w != -1) { // 該樓層有人在等
+                        double dist = std::abs(e.current_floor - f);
+                        double score = (ALPHA * priority[f]) + (BETA * max_w) - (GAMMA * dist);
+                        if (score > max_score) {
+                            max_score = score;
+                            best_f = f;
+                            found_request = true;
+                        }
+                    }
+                }
+                if (found_request) e.target_floor = best_f;
+                else e.target_floor = e.current_floor; // 沒事做，待在原地
+            }
+        }
+
+        // --- D. 執行移動 ---
         int old_floor = e.current_floor;
         if (e.target_floor > e.current_floor) {
             e.direction = 1;
