@@ -1,67 +1,52 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <string>
 #include <iomanip>
+#include <cmath>
+#include <numeric>
+#include <algorithm> // 用於 std::max_element
 
-struct FinishedPassenger {
-    int id;
-    int start;
-    int dest;
-    int spawn_tick;
-    int end_tick;
-};
-
-int main(int argc, char* argv[]) {
-    // 1. 讀取目前 Tick (選填，用於顯示進度)
-    int current_tick = 0;
-    if (argc > 1) {
-        current_tick = std::stoi(argv[1]);
-    }
-
-    std::vector<FinishedPassenger> finished;
+int main() {
     std::ifstream in("events.txt");
-    FinishedPassenger p;
-
-    // 2. 讀取 events.txt 中的所有完成記錄
-    // 格式：[ID] [Start] [Dest] [Spawn] [End]
-    while (in >> p.id >> p.start >> p.dest >> p.spawn_tick >> p.end_tick) {
-        finished.push_back(p);
+    int id, start, dest, spawn, enter, exit;
+    std::vector<double> wait_times;
+    std::vector<double> service_times;
+    
+    while (in >> id >> start >> dest >> spawn >> enter >> exit) {
+        wait_times.push_back((double)enter - spawn);
+        service_times.push_back((double)exit - spawn);
     }
     in.close();
 
-    // 3. 計算統計數據
-    int total_passengers = finished.size();
-    double total_wait_time = 0;
-    int max_wait_time = 0;
-    int min_wait_time = 999999;
-
-    for (const auto& fp : finished) {
-        int wait = fp.end_tick - fp.spawn_tick;
-        total_wait_time += wait;
-        if (wait > max_wait_time) max_wait_time = wait;
-        if (wait < min_wait_time) min_wait_time = wait;
-    }
-
-    double avg_wait_time = (total_passengers > 0) ? (total_wait_time / total_passengers) : 0;
-
-    // 4. 輸出摘要到 stats.txt (這會被 controller.sh 每秒更新)
     std::ofstream out("stats.txt");
-    out << "======== 模擬統計摘要 ========" << std::endl;
-    out << "目前模擬時間 (Tick): " << current_tick << std::endl;
-    out << "已完成載客總數: " << total_passengers << std::endl;
-    
-    if (total_passengers > 0) {
-        out << "平均服務總耗時: " << std::fixed << std::setprecision(2) << avg_wait_time << " Ticks" << std::endl;
-        out << "最大服務耗時: " << max_wait_time << " Ticks" << std::endl;
-        out << "最小服務耗時: " << min_wait_time << " Ticks" << std::endl;
+    int count = wait_times.size();
+
+    if (count > 0) {
+        // 1. 計算平均等待時間
+        double sum_wait = std::accumulate(wait_times.begin(), wait_times.end(), 0.0);
+        double avg_wait = sum_wait / count;
+        
+        // 2. 計算最大等待時間
+        double max_wait = *std::max_element(wait_times.begin(), wait_times.end());
+
+        // 3. 計算平均服務總耗時
+        double sum_service = std::accumulate(service_times.begin(), service_times.end(), 0.0);
+        double avg_service = sum_service / count;
+
+        // 4. 計算等待時間標準差
+        double sq_sum = 0;
+        for (double w : wait_times) sq_sum += std::pow(w - avg_wait, 2);
+        double std_dev = std::sqrt(sq_sum / count);
+
+        out << "=== 模擬統計結果 ===" << std::endl;
+        out << "已完成載客總數: " << count << std::endl;
+        out << "平均等待時間: " << std::fixed << std::setprecision(2) << avg_wait << " Ticks" << std::endl;
+        out << "等待時間標準差: " << std_dev << std::endl;
+        out << "最大等待時間: " << (int)max_wait << " Ticks" << std::endl; // 新增輸出
+        out << "平均服務總耗時: " << avg_service << " Ticks" << std::endl;
     } else {
-        out << "目前尚無乘客抵達目的地。" << std::endl;
+        out << "尚無完成紀錄。" << std::endl;
     }
     out.close();
-
-    // 5. 可選：在終端機輸出簡易訊息 (Debug 用)
-    // std::cout << "[Stats] Total Finished: " << total_passengers << " | Avg Wait: " << avg_wait_time << std::endl;
-
     return 0;
 }
