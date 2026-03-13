@@ -10,7 +10,7 @@ using namespace std;
 
 // --- 調度參數定義 ---
 const double ALPHA = 100.0; 
-const double BETA  = 15;  
+const double BETA  = 15.0;  
 const double GAMMA = 10;  
 const double C1    = 20;  // 即時等待人數權重
 const double C2    = 3;  // 歷史需求權重
