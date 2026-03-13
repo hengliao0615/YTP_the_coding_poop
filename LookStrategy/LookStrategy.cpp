@@ -68,8 +68,23 @@ void LookStrategy::execute(int current_tick) {
         }
 
         // 新增：下車完如目前車廂是空的，先把 e.direction 設為 0
-        if (e.box.empty()) {
-            e.direction = 0;
+        // if (e.box.empty() && e.target_floor==e.current_floor) e.direction = 0;
+
+        bool has_call_ahead = false;
+        
+        if (e.direction == 1) { // 向上移動中
+            // 檢查更高樓層是否有人等車，或車內乘客要去更高樓層
+            for (const auto& p : hall_queue) if (p.start > e.current_floor || (p.start==e.current_floor && p.dest>e.current_floor)) has_call_ahead = true;
+            for (const auto& p : e.box) if (p.dest > e.current_floor) has_call_ahead = true;
+            
+            if (!has_call_ahead) e.direction = -1; // 前方沒人，轉向
+        } 
+        else if (e.direction == -1) { // 向下移動中
+            // 檢查更低樓層是否有人等車，或車內乘客要去更低樓層
+            for (const auto& p : hall_queue) if (p.start < e.current_floor || (p.start==e.current_floor && p.dest<e.current_floor)) has_call_ahead = true;
+            for (const auto& p : e.box) if (p.dest < e.current_floor) has_call_ahead = true;
+
+            if (!has_call_ahead) e.direction = 1; // 前方沒人，轉向
         }
 
         // std::cout<<"check"<<std::endl;
@@ -94,22 +109,9 @@ void LookStrategy::execute(int current_tick) {
         // }
 
         // --- C. 決策邏輯 (LOOK) ---
-        bool has_call_ahead = false;
+        
 
-        if (e.direction == 1) { // 向上移動中
-            // 檢查更高樓層是否有人等車，或車內乘客要去更高樓層
-            for (const auto& p : hall_queue) if (p.start > e.current_floor) has_call_ahead = true;
-            for (const auto& p : e.box) if (p.dest > e.current_floor) has_call_ahead = true;
-            
-            if (!has_call_ahead) e.direction = -1; // 前方沒人，轉向
-        } 
-        else if (e.direction == -1) { // 向下移動中
-            // 檢查更低樓層是否有人等車，或車內乘客要去更低樓層
-            for (const auto& p : hall_queue) if (p.start < e.current_floor) has_call_ahead = true;
-            for (const auto& p : e.box) if (p.dest < e.current_floor) has_call_ahead = true;
-
-            if (!has_call_ahead) e.direction = 1; // 前方沒人，轉向
-        }
+        
 
         // 若電梯原本靜止或剛才轉向後發現全棟都沒請求
         bool any_call = !hall_queue.empty() || !e.box.empty();

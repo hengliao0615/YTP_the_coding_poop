@@ -4,8 +4,8 @@ import re
 
 # 策略列表包含核心 SCAN、LOOK 與優化後的 Better 策略
 STRATEGIES = ["core", "look", "better"]
-ITERATIONS = 5      
-TICKS = 1000
+ITERATIONS = 30      
+TICKS = 300
 
 def run_simulation(strategy, ticks):
     print(f"Running {strategy}...") 

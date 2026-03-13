@@ -9,8 +9,8 @@
 using namespace std;
 
 // --- 調度參數定義 ---
-const double ALPHA = 100.0; 
-const double BETA  = 15.0;  
+const double ALPHA = 1000.0; 
+const double BETA  = 50.0;  
 const double GAMMA = 10;  
 const double C1    = 20;  // 即時等待人數權重
 const double C2    = 3;  // 歷史需求權重
@@ -112,7 +112,7 @@ void BetterStrategy::execute(int current_tick) {
             } else ++it;
         }
 
-        if (e.box.empty()) e.direction = 0;
+        if (e.box.empty() && e.target_floor==e.current_floor) e.direction = 0;
 
         // --- B. 上車邏輯 (寫入 EnterTick) ---
         auto hit = hall_queue.begin();

@@ -63,7 +63,7 @@ void CoreStrategy::execute(int current_tick) {
                 ev << it->id << " " << it->start << " " << it->dest << " " 
                    << it->spawn_tick << " " << it->enter_tick << " " << current_tick << std::endl;
                 
-                jout << "        { \"type\": \"PASSENGER_EXIT\", \"passengerId\": \"P" << it->id << "\", \"floor\": " << e.current_floor + 1 << ", \"elevatorId\": \"E" << e.id << "\" }," << std::endl;
+                jout << "        { \"type\": \"PASSENGER_EXIT\", \"passengerId\": \"P" << it->id << "\", \"floor\": " << e.current_floor + 1 << ", \"elevatorId\": " << e.id << " }," << std::endl;
                 it = e.box.erase(it);
             } else ++it;
         }
@@ -88,7 +88,7 @@ void CoreStrategy::execute(int current_tick) {
                 e.box.push_back(p);
                 if (e.direction == 0) e.direction = p_dir;
 
-                jout << "        { \"type\": \"PASSENGER_ENTER\", \"passengerId\": \"P" << hit->id << "\", \"elevatorId\": \"E" << e.id << "\", \"floor\": " << e.current_floor + 1 << " }," << std::endl;
+                jout << "        { \"type\": \"PASSENGER_ENTER\", \"passengerId\": \"P" << hit->id << "\", \"elevatorId\": " << e.id << ", \"floor\": " << e.current_floor + 1 << " }," << std::endl;
                 hit = hall_queue.erase(hit);
             } else ++hit;
         }
@@ -126,7 +126,7 @@ void CoreStrategy::execute(int current_tick) {
         }
 
         if (old_f != e.current_floor) {
-            jout << "        { \"type\": \"ELEVATOR_MOVE\", \"elevatorId\": \"E" << e.id << "\", \"from\": " << old_f + 1 << ", \"to\": " << e.current_floor + 1 << ", \"direction\": \"" << (e.direction == 1 ? "UP" : "DOWN") << "\" }," << std::endl;
+            jout << "        { \"type\": \"ELEVATOR_MOVE\", \"elevatorId\": " << e.id << ", \"from\": " << old_f + 1 << ", \"to\": " << e.current_floor + 1 << ", \"direction\": \"" << (e.direction == 1 ? "UP" : "DOWN") << "\" }," << std::endl;
         }
     }
 
